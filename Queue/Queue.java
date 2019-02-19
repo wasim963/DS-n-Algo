@@ -15,7 +15,14 @@ public class Queue {
 
 	public void enqueue(int item) throws Exception {
 		if (this.size() == this.data.length) {
-			throw new Exception("Queue is Full.");
+	             int[] oq = this.data;
+    		     int[] nq = new int[2*oq.length];
+    		     for(int i=0;i<oq.length;i++){
+    			  int index= (i+this.front)%this.data.length;
+    			  nq[i] = oq[index];
+    		      }
+    		      this.front=0;
+    		      this.data = nq;
 		}
 		int ni = (this.front + this.size) % this.data.length;
 		this.data[ni] = item;
