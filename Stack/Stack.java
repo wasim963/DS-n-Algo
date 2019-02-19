@@ -12,9 +12,13 @@ public class Stack {
 		this.data = new int[cap];
 	}
 
-	public void push(int item) throws Exception {
+	public void push(int item) {
 		if (this.size() == this.data.length) {
-			throw new Exception("Stack is Full.");
+			int[] os = this.data;
+			int[] ns = new int[2 * os.length];
+			for (int i = 0; i < os.length; i++)
+				ns[i] = os[i];
+			this.data = ns;
 		}
 		this.tos++;
 		this.data[this.tos] = item;
