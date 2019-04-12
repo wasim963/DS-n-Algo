@@ -1,10 +1,14 @@
+import java.util.Arrays;
+
 public class MazePath {
 
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
 		// System.out.println(mazePath(0, 0, 10, 10));
 		// System.out.println(mazePathTD(0, 0, 10, 10, new int[11][11]));
-		System.out.println(mazePathBU(10, 10));
+		// System.out.println(mazePathBU(3, 4));
+		// System.out.println(mazePathBUSlider(3, 4));
+		System.out.println(mazePathBUSliderDi(3, 3));
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
 	}
@@ -54,6 +58,40 @@ public class MazePath {
 		}
 
 		return strg[0][0];
+	}
+
+	public static int mazePathBUSlider(int er, int ec) {
+		int[] strg = new int[ec + 1];
+		Arrays.fill(strg, 1);
+
+		for (int slider = er - 1; slider >= 0; slider--) {
+			for (int col = ec - 1; col >= 0; col--) {
+				strg[col] = strg[col] + strg[col + 1];
+			}
+		}
+
+		return strg[0];
+	}
+
+	public static int mazePathBUSliderDi(int er, int ec) {
+		int[] strg = new int[ec + 1];
+		Arrays.fill(strg, 1);
+
+		int diagElement = 1;
+		for (int slider = er - 1; slider >= 0; slider--) {
+			for (int col = ec; col >= 0; col--) {
+				if (col == ec) {
+					strg[col] = 1;
+					diagElement = 1;
+				} else {
+					int val = strg[col] + strg[col + 1] + diagElement;
+					diagElement = strg[col];
+					strg[col] = val;
+				}
+			}
+		}
+
+		return strg[0];
 	}
 
 }
