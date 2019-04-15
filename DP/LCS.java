@@ -4,8 +4,9 @@ public class LCS {
 		String s1 = "SundayMonday";
 		String s2 = "SaturdayTuesday";
 		long start = System.currentTimeMillis();
-		//System.out.println(lcs(s1, s2));
+		// System.out.println(lcs(s1, s2));
 		System.out.println(lcsTD(s1, s2, new int[s1.length() + 1][s2.length() + 1]));
+		System.out.println(lcsBU(s1, s2));
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
 	}
@@ -53,6 +54,22 @@ public class LCS {
 		ans = Math.max(c1, c2);
 		strg[s1.length()][s2.length()] = ans;
 		return ans;
+	}
+
+	public static int lcsBU(String s1, String s2) {
+		int[][] strg = new int[s1.length() + 1][s2.length() + 2];
+
+		for (int row = s1.length() - 1; row >= 0; row--) {
+			for (int col = s2.length() - 1; col >= 0; col--) {
+				if (s1.charAt(row) == s2.charAt(col)) {
+					strg[row][col] = strg[row + 1][col + 1] + 1;
+				} else {
+					strg[row][col] = Math.max(strg[row + 1][col], strg[row][col + 1]);
+				}
+			}
+		}
+
+		return strg[0][0];
 	}
 
 }
