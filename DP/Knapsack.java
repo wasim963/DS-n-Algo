@@ -1,10 +1,9 @@
-
 public class Knapsack {
 
 	public static void main(String[] args) {
 		int[] wt = { 1, 3, 4, 5 };
 		int[] price = { 1, 4, 5, 7 };
-		System.out.println(knapsackTD(wt, price, 0, 7, new int[wt.length][8]));
+	//	System.out.println(knapsackTD(wt, price, 0, 7, new int[wt.length][8]));
 		System.out.println(knapsackBU(wt, price, 7));
 	}
 
