@@ -7,6 +7,7 @@ public class WineSale {
 		long start = System.currentTimeMillis();
 		System.out.println(wine(arr, 1, 0, arr.length - 1));
 		System.out.println(wineTD(arr, 0, arr.length - 1, new int[arr.length][arr.length]));
+		System.out.println(wineBU(arr));
 		long end = System.currentTimeMillis();
 		System.out.println(end - start);
 	}
@@ -34,6 +35,27 @@ public class WineSale {
 		int ans = Math.max(start, end);
 		strg[si][ei] = ans;
 		return ans;
+	}
+
+	private static int wineBU(int[] arr) {
+		int n = arr.length;
+		int[][] strg = new int[n][n];
+
+		for (int slide = 0; slide < n; slide++) {
+			for (int si = 0; si < n - slide; si++) {
+				int ei = si + slide;
+				int yr = (n - (ei - si));
+				if (si == ei) {
+					strg[si][ei] = yr * arr[si];
+				} else {
+					int sc = yr * arr[ei] + strg[si][ei - 1];
+					int oc = yr * arr[si] + strg[si + 1][ei];
+					strg[si][ei] = Math.max(sc, oc);
+				}
+
+			}
+		}
+		return strg[0][n - 1];
 	}
 
 }
