@@ -36,6 +36,9 @@ public class GraphClient {
 		System.out.println("hasPath: " + graph.hasPath("A", "G", new HashMap<>()));
 
 		graph.display();
+
+		System.out.println(graph.bfs("C", "F"));
+		System.out.println(graph.dfs("C", "F"));
 	}
 
 }

@@ -116,4 +116,91 @@ public class Graph {
 		return false;
 	}
 
+	private class Pair {
+		String vname;
+		String psf;
+		Vertex vtx;
+		String color;
+
+		public Pair(String vname, String psf, Vertex vtx) {
+			this.vname = vname;
+			this.psf = psf;
+			this.vtx = vtx;
+
+		}
+
+		public Pair(String vname, String psf, Vertex vtx, String color) {
+			this.vname = vname;
+			this.psf = psf;
+			this.vtx = vtx;
+			this.color = color;
+
+		}
+	}
+
+	public boolean bfs(String src, String dst) {
+		if (containsEdge(src, dst)) {
+			return true;
+		}
+		HashMap<String, Boolean> processed = new HashMap<>();
+		LinkedList<Pair> queue = new LinkedList<>();
+		Pair np = new Pair(src, src, vertices.get(src));
+		queue.addLast(np);
+		while (!queue.isEmpty()) {
+			Pair rp = queue.removeFirst();
+			if (processed.containsKey(rp.vname)) {
+				continue;
+			}
+			processed.put(rp.vname, true);
+			if (containsEdge(rp.vname, dst)) {
+				System.out.println(rp.psf + dst);
+				return true;
+			}
+
+			ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+			for (String nbr : nbrs) {
+				Vertex vtx = vertices.get(nbr);
+				Pair nbPair = new Pair(nbr, rp.psf + nbr, vtx);
+				if (!processed.containsKey(nbr)) {
+					queue.addLast(nbPair);
+				}
+			}
+
+		}
+		return false;
+	}
+
+	public boolean dfs(String src, String dst) {
+		if (containsEdge(src, dst)) {
+			return true;
+		}
+		HashMap<String, Boolean> processed = new HashMap<>();
+		LinkedList<Pair> stack = new LinkedList<>();
+		Pair np = new Pair(src, src, vertices.get(src));
+		stack.addFirst(np);
+		while (!stack.isEmpty()) {
+			Pair rp = stack.removeFirst();
+			if (processed.containsKey(rp.vname)) {
+				continue;
+			}
+			processed.put(rp.vname, true);
+
+			if (containsEdge(rp.vname, dst)) {
+				System.out.println(rp.psf + dst);
+				return true;
+			}
+
+			ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+			for (String nbr : nbrs) {
+				Vertex vtx = vertices.get(nbr);
+				Pair nbPair = new Pair(nbr, rp.psf + nbr, vtx);
+				if (!processed.containsKey(nbr)) {
+					stack.addFirst(nbPair);
+				}
+			}
+
+		}
+		return false;
+	}
+
 }
