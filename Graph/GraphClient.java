@@ -20,25 +20,35 @@ public class GraphClient {
 		graph.addEdge("E", "F", 5);
 		graph.addEdge("E", "G", 12);
 		graph.addEdge("F", "G", 4);
-		graph.display();
+		// graph.display();
 
-		System.out.println(graph.containsVertex("G"));
-		System.out.println("numVertex: " + graph.numVertex());
-		System.out.println("numEdge: " + graph.numEdge());
+		// System.out.println(graph.containsVertex("G"));
+		// System.out.println("numVertex: " + graph.numVertex());
+		// System.out.println("numEdge: " + graph.numEdge());
 
 		// graph.removeVertex("D");
-		System.out.println("containsEdge: " + graph.containsEdge("A", "B"));
-		graph.removeEdge("A", "B");
-		System.out.println("containsEdge: " + graph.containsEdge("A", "B"));
+		// System.out.println("containsEdge: " + graph.containsEdge("A", "B"));
+		// graph.removeEdge("A", "B");
+		// System.out.println("containsEdge: " + graph.containsEdge("A", "B"));
 
 		// graph.removeEdge("D", "E");
+		// graph.removeEdge("B", "C");
 		// graph.removeEdge("F", "G");
-		System.out.println("hasPath: " + graph.hasPath("A", "G", new HashMap<>()));
+		// System.out.println(graph.hasPath("A", "G", new HashMap<>()));
 
 		graph.display();
 
-		System.out.println(graph.bfs("C", "F"));
-		System.out.println(graph.dfs("C", "F"));
+		// System.out.println(graph.bfs("C", "F"));
+		// System.out.println(graph.dfs("C", "F"));
+
+		// graph.bft();
+		// System.out.println("-----------------------------");
+		// graph.dft();
+
+		// System.out.println("Connected: " + graph.isConnected());
+		// System.out.println(graph.getConnectedComp());
+		// System.out.println("Cyclic: " + graph.isCyclic());
+		System.out.println("Tree: " + graph.isTree());
 	}
 
 }

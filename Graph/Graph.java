@@ -275,4 +275,109 @@ public class Graph {
 
 	}
 
+	public ArrayList<ArrayList<String>> getConnectedComp() {
+
+		ArrayList<ArrayList<String>> ans = new ArrayList<>();
+		HashMap<String, Boolean> processed = new HashMap<>();
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		ArrayList<String> keys = new ArrayList<>(this.vertices.keySet());
+		for (String key : keys) {
+			Pair np = new Pair(key, key, this.vertices.get(key));
+			if (processed.containsKey(key))
+				continue;
+
+			queue.addLast(np);
+			ArrayList<String> subans = new ArrayList<>();
+			while (!queue.isEmpty()) {
+				Pair rp = queue.removeFirst();
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+				subans.add(rp.vname);
+				processed.put(rp.vname, true);
+				ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+				for (String nbr : nbrs) {
+					Vertex vtx = vertices.get(nbr);
+					Pair nbpair = new Pair(nbr, rp.psf + nbr, vtx);
+					if (!processed.containsKey(nbr)) {
+						queue.addLast(nbpair);
+					}
+				}
+			}
+			ans.add(subans);
+		}
+		return ans;
+	}
+
+	public boolean isConnected() {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+		LinkedList<Pair> queue = new LinkedList<>();
+		ArrayList<String> keys = new ArrayList<>(this.vertices.keySet());
+		int flag = 0;
+		for (String key : keys) {
+			Pair np = new Pair(key, key, this.vertices.get(key));
+			if (processed.containsKey(key))
+				continue;
+			if (flag == 1) {
+				return false;
+			}
+			queue.addLast(np);
+			flag = 1;
+			while (!queue.isEmpty()) {
+				Pair rp = queue.removeFirst();
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+				processed.put(rp.vname, true);
+				ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+				for (String nbr : nbrs) {
+					Vertex vtx = vertices.get(nbr);
+					Pair nbpair = new Pair(nbr, rp.psf + nbr, vtx);
+					if (!processed.containsKey(nbr)) {
+						queue.addLast(nbpair);
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean isCyclic() {
+		LinkedList<Pair> queue = new LinkedList<>();
+		ArrayList<String> keys = new ArrayList<>(this.vertices.keySet());
+		HashMap<String, Boolean> processed = new HashMap<>();
+		for (String key : keys) {
+			Pair np = new Pair(key, key, vertices.get(key));
+			if (processed.containsKey(key)) {
+				continue;
+			}
+			queue.addLast(np);
+			while (!queue.isEmpty()) {
+
+				Pair rp = queue.removeFirst();
+				if (processed.containsKey(rp.vname)) {
+					return true;
+				}
+				processed.put(rp.vname, true);
+
+				ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+				for (String nbr : nbrs) {
+					Vertex vtx = vertices.get(nbr);
+					Pair nbPair = new Pair(nbr, rp.psf + nbr, vtx);
+					if (!processed.containsKey(nbr)) {
+						queue.addLast(nbPair);
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isTree() {
+		return isConnected() && !isCyclic();
+	}
+
 }
