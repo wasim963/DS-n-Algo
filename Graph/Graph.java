@@ -380,4 +380,39 @@ public class Graph {
 		return isConnected() && !isCyclic();
 	}
 
+	public boolean isBipartite() {
+		HashMap<String, String> processed = new HashMap<>();
+		ArrayList<String> keys = new ArrayList<>(this.vertices.keySet());
+		LinkedList<Pair> queue = new LinkedList<>();
+		for (String key : keys) {
+			Pair np = new Pair(key, key, vertices.get(key), "r");
+			if (processed.containsKey(key)) {
+				continue;
+			}
+			queue.addLast(np);
+			while (!queue.isEmpty()) {
+				Pair rp = queue.removeFirst();
+				if (processed.containsKey(rp.vname)) {
+					String oc = processed.get(rp.vname);
+					String nc = rp.color;
+					if (!oc.equals(nc)) {
+						return false;
+					}
+					continue;
+				}
+				processed.put(rp.vname, rp.color);
+				ArrayList<String> nbrs = new ArrayList<>(rp.vtx.nbrs.keySet());
+				for (String nbr : nbrs) {
+					if (!processed.containsKey(nbr)) {
+						Vertex vtx = this.vertices.get(nbr);
+						String color = rp.color.equals("r") ? "g" : "r";
+						Pair nbPair = new Pair(nbr, rp.psf + nbr, vtx, color);
+						queue.addLast(nbPair);
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 }

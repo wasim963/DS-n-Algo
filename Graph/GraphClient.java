@@ -49,6 +49,7 @@ public class GraphClient {
 		// System.out.println(graph.getConnectedComp());
 		// System.out.println("Cyclic: " + graph.isCyclic());
 		System.out.println("Tree: " + graph.isTree());
+		System.out.println("Bipartite: " + graph.isBipartite());
 	}
 
 }
